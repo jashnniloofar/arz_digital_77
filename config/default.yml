@@ -1,0 +1,40 @@
+db:
+  connectionString:
+  database: arz_digital_77
+  tls: false
+jwt:
+  issuer: ArzDigital77:IAM
+  audience: ArzDigital77
+  expiresIn: 24h
+  algorithm: RS256
+  staticKey: false
+logs:
+  dir: logs
+  error:
+    maxFiles: 14d
+    maxSize: 10m
+  debug:
+    maxFiles: 14d
+    maxSize: 20m'
+server:
+  port: 40001
+  basePath: api/v1
+  host: localhost
+  protocol: http
+  enableDocumentation: true
+  enableAuthorization: true
+  initialAdmin:
+    username: admin
+    password:
+rewards:
+  - 50
+  - 400
+  - 200
+  - 100
+  - 10
+  - 100
+  - 10
+  - 100
+  - 10
+  - 10
+  - 10

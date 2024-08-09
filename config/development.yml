@@ -1,0 +1,13 @@
+db:
+  connectionString: mongodb://localhost:27017
+  database: arz_digital_77
+  tls: false
+jwt:
+  staticKey: false
+  privateKeyPath: fileStorage/keys/privateKey.pem
+  publicKeyPath: fileStorage/keys/publicKey.pem
+server:
+  enableAuthorization: true
+  initialAdmin:
+    username: admin
+    password: Test@123
