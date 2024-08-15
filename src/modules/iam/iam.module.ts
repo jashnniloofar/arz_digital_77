@@ -1,16 +1,13 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { SerialsModule } from '../serial/serials.module';
 import { JWTService } from './jwt.service';
-import { User, UserSchema } from './user.schema';
+import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    SerialsModule,
-  ],
+  imports: [TypeOrmModule.forFeature([User]), SerialsModule],
   controllers: [UsersController],
   providers: [JWTService, UsersService],
   exports: [JWTService, UsersService],

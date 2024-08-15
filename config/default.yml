@@ -1,7 +1,10 @@
 db:
-  connectionString:
-  database: arz_digital_77
-  tls: false
+  host: localhost
+  port: 3306
+  username:
+  password:
+  database:
+  synchronize: false
 jwt:
   issuer: ArzDigital77:IAM
   audience: ArzDigital77

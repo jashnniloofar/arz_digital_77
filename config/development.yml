@@ -1,7 +1,10 @@
 db:
-  connectionString: mongodb://localhost:27017
-  database: arz_digital_77
-  tls: false
+  host:
+  port: 3306
+  username:
+  password:
+  database:
+  synchronize: true
 jwt:
   staticKey: false
   privateKeyPath: fileStorage/keys/privateKey.pem

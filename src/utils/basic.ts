@@ -1,13 +1,3 @@
-import { Types } from 'mongoose';
-
-/**
- *
- * @returns new MongoDB id in string format
- */
-export const newMongoId = (): string => {
-  return new Types.ObjectId().toHexString();
-};
-
 /**
  *
  * @param min minimum random number

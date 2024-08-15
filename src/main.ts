@@ -24,8 +24,8 @@ async function bootstrap() {
   if (serverConfig.enableDocumentation) {
     logger.log('Building API documentation');
     const options = new DocumentBuilder()
-      .setTitle('Krowdz')
-      .setDescription('Krowdz API')
+      .setTitle('ArzDigital77')
+      .setDescription('ArzDigital77 API')
       .setVersion('1.0.0')
       .addServer(`../${serverConfig.basePath}`, 'Local Server')
       .setExternalDoc('Swagger JSON file', `${serverConfig.shortUrl}/api-json`)
@@ -40,5 +40,6 @@ async function bootstrap() {
     SwaggerModule.setup('api', app, document);
   }
   await app.listen(serverConfig.port);
+  logger.log(`Server started at ${serverConfig.url}`);
 }
 bootstrap();

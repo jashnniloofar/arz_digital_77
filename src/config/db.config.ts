@@ -1,9 +1,13 @@
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as config from 'config';
 
-const certFileName: string | undefined = config.has('db.certificateFileName') ? config.get('db.certificateFileName') : undefined;
-export const dbOptions = {
-  dbName: config.get<string>('db.database'),
-  tls: config.has('db.tls') ? config.get<boolean>('db.tls') : false,
-  tlsCAFile: certFileName,
-  retryWrites: false,
+export const dbOptions: TypeOrmModuleOptions = {
+  type: 'mysql',
+  host: config.get<string>('db.host'),
+  port: config.get<number>('db.port'),
+  username: config.get<string>('db.username'),
+  password: config.get<string>('db.password'),
+  database: config.get<string>('db.database'),
+  synchronize: config.get<boolean>('db.synchronize'),
+  autoLoadEntities: true,
 };

@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
   private async _authorize(context: ExecutionContext): Promise<Auth | null> {
     // is authorization enabled? useful for development
     if (!config.get<boolean>('server.enableAuthorization'))
-      return { id: 'DEV_TEST', username: 'DEVELOPMENT_TEST', role: 'admin' };
+      return { id: 0, username: 'DEVELOPMENT_TEST', role: 'admin' };
 
     const request = context.switchToHttp().getRequest();
     if (
@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
       try {
         const decoded = this.jwtService.decodeJwt(token);
         const auth: Auth = {
-          id: decoded.sub,
+          id: +decoded.sub,
           role: decoded.role,
           username: decoded.username,
         };

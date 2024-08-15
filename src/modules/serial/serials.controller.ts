@@ -9,7 +9,7 @@ import {
 import { AuthGuard } from '../iam/auth.guard';
 import { Roles } from '../iam/role.decorator';
 import { GenerateSerialsDto } from './dtos';
-import { Serial } from './seral.schema';
+import { Serial } from './seral.entity';
 import { SerialsService } from './serials.service';
 
 @Controller('serials')

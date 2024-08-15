@@ -1,15 +1,12 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { IamModule } from '../iam/iam.module';
-import { Serial, SerialSchema } from './seral.schema';
+import { Serial } from './seral.entity';
 import { SerialsController } from './serials.controller';
 import { SerialsService } from './serials.service';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Serial.name, schema: SerialSchema }]),
-    forwardRef(() => IamModule),
-  ],
+  imports: [TypeOrmModule.forFeature([Serial]), forwardRef(() => IamModule)],
   controllers: [SerialsController],
   providers: [SerialsService],
   exports: [SerialsService],

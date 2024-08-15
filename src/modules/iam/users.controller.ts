@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -16,7 +17,6 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ParseObjectIdPipe } from '../../shared/dto';
 import { AuthGuard } from './auth.guard';
 import { Auth } from './auth.interface';
 import {
@@ -29,7 +29,7 @@ import {
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { GetAuth } from './get-auth.decorator';
 import { Roles } from './role.decorator';
-import { User } from './user.schema';
+import { User } from './user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -89,7 +89,7 @@ export class UsersController {
   @ApiOperation({ summary: 'reset password by admin' })
   async resetPassword(
     @GetAuth() actor: Auth,
-    @Param('userId', ParseObjectIdPipe) userId: string,
+    @Param('userId', ParseIntPipe) userId: number,
     @Body() resetPasswordDto: ResetPasswordDto,
   ): Promise<void> {
     return await this.service.resetPassword(actor, userId, resetPasswordDto);

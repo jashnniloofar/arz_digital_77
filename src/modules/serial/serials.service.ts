@@ -1,24 +1,27 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { getRandomString } from '../../utils/basic';
-import { Serial, SerialDocument } from './seral.schema';
+import { Serial } from './seral.entity';
 import { SerialStatus } from './serial-status.enum';
 
 @Injectable()
 export class SerialsService {
   private logger = new Logger(SerialsService.name);
 
-  constructor(@InjectModel(Serial.name) private model: Model<SerialDocument>) {}
+  constructor(
+    @InjectRepository(Serial) private repository: Repository<Serial>,
+  ) {}
 
   async generate(count: number): Promise<Serial[]> {
     const serials: Serial[] = [];
     while (serials.length < count) {
       const code = getRandomString(20, 'alphanumeric');
-      const exists = await this.model.findOne({ code });
+      const exists = await this.repository.findOneBy({ code });
       if (!exists) {
-        const serial = new this.model({ code });
-        await serial.save();
+        const serial = new Serial();
+        serial.code = code;
+        await this.repository.save(serial);
         serials.push(serial);
       }
     }
@@ -26,12 +29,12 @@ export class SerialsService {
     return serials;
   }
 
-  async getSerialByCode(code: string): Promise<SerialDocument> {
-    return await this.model.findOne({ code });
+  async getSerialByCode(code: string): Promise<Serial> {
+    return await this.repository.findOneBy({ code });
   }
 
-  async useCode(code: string): Promise<SerialDocument> {
-    const serial = await this.model.findOne({
+  async useCode(code: string): Promise<Serial> {
+    const serial = await this.repository.findOneBy({
       code,
       status: SerialStatus.active,
     });
@@ -39,6 +42,6 @@ export class SerialsService {
       throw new NotFoundException(`Invalid serial code`);
     }
     serial.status = SerialStatus.used;
-    return await serial.save();
+    return await this.repository.save(serial);
   }
 }

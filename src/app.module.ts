@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import * as config from 'config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { WinstonModule } from 'nest-winston';
 import { dbOptions } from './config/db.config';
 import { WinstonConfigs } from './config/winston.config';
@@ -9,7 +8,7 @@ import { SerialsModule } from './modules/serial/serials.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(config.get('db.connectionString'), dbOptions),
+    TypeOrmModule.forRoot(dbOptions),
     WinstonModule.forRoot(WinstonConfigs),
     IamModule,
     SerialsModule,
