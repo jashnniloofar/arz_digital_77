@@ -65,14 +65,6 @@ export class User extends BaseEntity {
   })
   balance: number;
 
-  // @ManyToOne((type) => User, { eager: false, lazy: true })
-  // @ApiProperty({
-  //   type: String,
-  //   description: 'id of user',
-  //   example: '630cf16b72885f51a7510b76',
-  // })
-  // ref?: User;
-
   @ManyToOne(() => User, (user) => user.children)
   ref?: User;
 

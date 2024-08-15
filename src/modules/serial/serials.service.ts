@@ -2,6 +2,7 @@ import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { getRandomString } from '../../utils/basic';
+import { FilterSerialsDto, UpdateSerialsDto } from './dtos';
 import { Serial } from './seral.entity';
 import { SerialStatus } from './serial-status.enum';
 
@@ -12,6 +13,10 @@ export class SerialsService {
   constructor(
     @InjectRepository(Serial) private repository: Repository<Serial>,
   ) {}
+
+  async getSerials(filterSerialsDto: FilterSerialsDto): Promise<Serial[]> {
+    return this.repository.find({ where: filterSerialsDto });
+  }
 
   async generate(count: number): Promise<Serial[]> {
     const serials: Serial[] = [];
@@ -43,5 +48,19 @@ export class SerialsService {
     }
     serial.status = SerialStatus.used;
     return await this.repository.save(serial);
+  }
+
+  async delete(id: number): Promise<void> {
+    const deleteResult = await this.repository.delete(id);
+    if (deleteResult.affected === 0) {
+      throw new NotFoundException(`Serial not found`);
+    }
+  }
+
+  async update(id: number, updateDto: UpdateSerialsDto): Promise<void> {
+    const updateResult = await this.repository.update(id, updateDto);
+    if (updateResult.affected === 0) {
+      throw new NotFoundException(`Serial not found`);
+    }
   }
 }

@@ -10,22 +10,4 @@ export class FilterUsersDto {
     example: 'admin',
   })
   username?: string;
-
-  @IsOptional()
-  @IsString()
-  @ApiPropertyOptional({
-    type: String,
-    description: 'role of the user',
-    example: 'admin',
-  })
-  role?: string;
-
-  @IsOptional()
-  @IsString()
-  @ApiPropertyOptional({
-    type: String,
-    description: 'referred by',
-    example: 'admin',
-  })
-  ref?: string;
 }
